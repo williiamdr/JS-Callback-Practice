@@ -1,3 +1,6 @@
+const character = newImage('assets/green-character/static.gif')
+
+
 function move(element) {
     element.style.position = 'fixed'
 
@@ -6,34 +9,28 @@ function move(element) {
         element.style.bottom = bottom + 'px'
     }
 
-    function moveWithArrowKeys(left, bottom){
+    function moveWithArrowKeys(left, bottom, callback){
         let direction = null;
         let x = left;
         let y = bottom;
     
-        element.style.left = x + 'px'
-        element.style.bottom = y + 'px'
+        
         
         function moveCharacter(){ 
-            const character = newImage('assets/green-character/static.gif')
-
-            if(direction === null){
-                character.src = 'assets/green-character/static.gif'
-            }
             if(direction === 'west'){
-                character.src = 'assets/green-character/west.gif'
+                x-= 1
             }
             if(direction === 'north'){
-                character.src = 'assets/green-character/north.gif'
+                y+= 1
             }
             if(direction === 'east'){
-                character.src = 'assets/green-character/east.gif'
+                x+= 1
             }
             if(direction === 'south'){
-                character.src = 'assets/green-character/south.gif'
+                y-= 1
             }
-            
-            move(character).withArrowKeys(100, 250)
+            element.style.left = x + 'px'
+            element.style.bottom = y + 'px'
         }
         
         setInterval(moveCharacter, 1)
@@ -53,6 +50,7 @@ function move(element) {
             if(e.key === 'ArrowDown'){
                 direction = 'south'
             }
+            callback(direction)
         })
         
         document.addEventListener('keyup', function(e){
